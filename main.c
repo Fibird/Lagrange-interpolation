@@ -7,8 +7,8 @@
 #define b 5.0
 
 #define PI 3.1415926535
-
-const double h = (b - a) / N;
+//It is no use
+//const double h = (b - a) / N;
 
 double func(double x)
 {
