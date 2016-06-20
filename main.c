@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define N 40
+#define N 25
 #define a -5.0
 #define b 5.0
 
@@ -18,7 +18,7 @@ double omega(double x, int k)
 {
     int i;
     double omega = 1.0, Xn;
-    for (i = 0; i < N; i++)
+    for (i = 0; i <= N; i++)
     {
         Xn = a + i * h;
         if (i == k)
@@ -33,7 +33,7 @@ double omega_deri(int k)
     int i;
     double omega_deri = 1.0, Xn;
     double Xk = a + k * h;
-    for (i = 0; i < N; i++)
+    for (i = 0; i <= N; i++)
     {
         Xn = a + i * h;
         if (i == k)
@@ -47,17 +47,25 @@ int main()
     double Lagra;
     double Xn, x;
     int i;
+    double j;
+    FILE *fp = fopen("result.txt", "w+");
 
-    printf("Please enter x: ");
-    scanf("%lf", &x);
-
-    for (i = 0; i < N; i++)
+    //printf("Please enter x: ");
+    //scanf("%lf", &x);
+    x = -4.0;
+    for (j = a; j < b; j += 0.1)
+    {
+    x = j;
+    for (i = 0; i <= N; i++)
     {
         Xn = a + i * h;
         Lagra += ((func(Xn) * omega(x, i)) / omega_deri(i));
     }
-
-    printf("The approximate value is: %lf\n", Lagra);
-    printf("The real value is: %lf\n", func(x));
+    //printf("The approximate value is: %lf\n", Lagra);
+    //printf("The real value is: %lf\n", func(x));
+    fprintf(fp, "%lf\t%lf\t%lf\n", x, Lagra, func(x));
+    Lagra = 0.0;
+    }
+    fclose(fp);
     return 0;
 }
